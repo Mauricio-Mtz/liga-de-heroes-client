@@ -1,0 +1,226 @@
+@import 'tailwindcss';
+@plugin "daisyui";
+
+/* Importar fuentes de Google para estilo cómic */
+@import url('https://fonts.googleapis.com/css2?family=Bangers&family=Comic+Neue:wght@400;700&display=swap');
+
+@plugin "daisyui/theme" {
+  name: 'comic';
+  default: false;
+  prefersdark: false;
+  color-scheme: 'light';
+
+  /* Colores base - fondo contrastado para estilo cómic */
+  --color-base-100: #ffffff; /* Blanco puro para mejor contraste */
+  --color-base-200: #f0f2f5; /* Gris muy claro con toque azulado */
+  --color-base-300: #e0e4eb; /* Gris claro con toque azulado */
+  --color-base-content: #191c1f; /* Negro profundo para mejor legibilidad */
+
+  /* Colores principales - paleta vibrante estilo cómic */
+  --color-primary: #4169e1; /* Azul royal más vibrante */
+  --color-primary-content: #ffffff; /* Blanco */
+  --color-secondary: #7b2cbf; /* Púrpura vibrante */
+  --color-secondary-content: #ffffff; /* Blanco */
+  --color-accent: #ff1a75; /* Rosa chicle intenso */
+  --color-accent-content: #ffffff; /* Blanco */
+  --color-neutral: #2d3748; /* Gris azulado profundo */
+  --color-neutral-content: #ffffff; /* Blanco */
+
+  /* Colores de estado - más brillantes y definidos */
+  --color-info: #00c8ff; /* Azul celeste brillante */
+  --color-info-content: #000000; /* Negro para contraste */
+  --color-success: #00d474; /* Verde lima brillante */
+  --color-success-content: #000000; /* Negro para contraste */
+  --color-warning: #ffb700; /* Amarillo oro brillante */
+  --color-warning-content: #000000; /* Negro para contraste */
+  --color-error: #ff3a3a; /* Rojo brillante */
+  --color-error-content: #ffffff; /* Blanco */
+
+  /* Elementos de estilo cómic más definidos */
+  --radius-selector: 2px; /* Bordes ligeramente redondeados */
+  --radius-field: 2px; /* Bordes ligeramente redondeados */
+  --radius-box: 4px; /* Bordes ligeramente redondeados */
+  --size-selector: 0.3rem;
+  --size-field: 0.3rem;
+  --border: 2.5px; /* Bordes moderados */
+  --depth: 1.5; /* Profundidad equilibrada */
+  --noise: 0; /* Sin ruido para colores planos de cómic */
+  
+  /* Tipografía cómic */
+  --font-family: 'Comic Neue', 'Comic Sans MS', sans-serif;
+}
+
+/* Aplicar fuentes de cómic a elementos específicos */
+body {
+  font-family: 'Comic Neue', 'Comic Sans MS', sans-serif !important;
+}
+
+h1, h2, h3, .card-title, .btn, .comic-text {
+  font-family: 'Bangers', cursive !important;
+  letter-spacing: 1px !important;
+}
+
+/* Estilos adicionales para un aspecto cómic más vibrante */
+
+/* Sombras estilo cómic para tarjetas */
+.card {
+  box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.9) !important;
+  border: 2.5px solid #000 !important;
+  transition: transform 0.2s ease, box-shadow 0.2s ease !important;
+}
+
+/* Botones con borde negro más definido */
+.btn {
+  height: 40px;
+  border: 2.5px solid #000 !important;
+  box-shadow: 3px 3px 0px rgba(0, 0, 0, 0.9) !important;
+  font-weight: bold !important;
+  text-transform: uppercase !important;
+  letter-spacing: 1px !important;
+  transform: rotate(0) !important;
+  position: relative;
+  transition: transform 0.2s ease, box-shadow 0.2s ease !important;
+}
+
+/* Estructura de formularios */
+form {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--spacing) * 2);
+}
+
+/* Inputs con borde más definido */
+input,
+select,
+textarea {
+  height: 40px;
+  border: 2.5px solid #000 !important;
+  box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.7) !important;
+  transition: transform 0.2s ease, box-shadow 0.2s ease !important;
+  font-family: 'Comic Neue', 'Comic Sans MS', sans-serif !important;
+}
+
+/* Efecto de hover más dinámico */
+.btn:hover {
+  transform: translateY(-3px) !important;
+  box-shadow: 5px 5px 0px rgba(0, 0, 0, 0.9) !important;
+}
+
+.card:hover {
+  transform: translateY(-3px) !important;
+  box-shadow: 7px 7px 0px rgba(0, 0, 0, 0.9) !important;
+}
+
+/* Input focus con efecto más contrastado */
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none !important;
+  box-shadow: 3px 3px 0px rgba(0, 0, 0, 0.9), 0 0 0 2px rgba(65, 105, 225, 0.4) !important;
+  border-color: #4169e1 !important;
+}
+
+/* Sombras internas para paneles */
+.alert,
+.card-body {
+  box-shadow: inset 1px 1px 0px rgba(255, 255, 255, 0.6),
+    inset -1px -1px 0px rgba(0, 0, 0, 0.15) !important;
+}
+
+/* Líneas de acción a los botones - patrón de halftone estilo cómic */
+.btn::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background: radial-gradient(
+    circle,
+    #000 10%, 
+    transparent 11%
+  );
+  background-size: 7px 7px;
+  opacity: 0.07;
+  z-index: -1;
+}
+
+/* Efecto de texto con sombra para títulos */
+.comic-title {
+  text-shadow: 2px 2px 0 #000 !important;
+}
+
+/* Efectos especiales para elementos de explosión */
+.comic-burst {
+  filter: drop-shadow(2px 2px 0 rgba(0,0,0,0.9));
+  transform-origin: center;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1) rotate(var(--rotation, 0deg)); }
+  50% { transform: scale(1.05) rotate(var(--rotation, 0deg)); }
+  100% { transform: scale(1) rotate(var(--rotation, 0deg)); }
+}
+
+/* Mejoras para detalles de estilo tipo cómic */
+.comic-border {
+  border: 2.5px solid #000 !important;
+  box-shadow: 4px 4px 0 rgba(0,0,0,0.9) !important;
+}
+
+/* Detalles de estilo para las pestañas */
+.tabs-boxed .tab {
+  border: 2.5px solid #000 !important;
+  position: relative;
+  box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.7) !important;
+}
+
+.tabs-boxed .tab-active {
+  border: 2.5px solid #000 !important;
+  box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.7) inset !important;
+  font-weight: bold !important;
+}
+
+/* Mejoras para etiquetas de formulario */
+.label-text {
+  font-weight: bold !important;
+  letter-spacing: 0.5px !important;
+  text-transform: uppercase !important;
+  font-size: 0.85rem !important;
+}
+
+/* Efectos de focus más llamativos */
+.btn:focus {
+  outline: none !important;
+  box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.9), 0 0 0 2px rgba(65, 105, 225, 0.4) !important;
+}
+
+/* Transiciones globales para elementos interactivos */
+button,
+a,
+input,
+select,
+textarea {
+  transition: all 0.2s ease !important;
+}
+
+/* Añadir líneas de énfasis a los headers */
+h1, h2, h3, h4, h5, h6 {
+  position: relative;
+  display: inline-block;
+  z-index: 1;
+}
+
+h1::after, h2::after, h3::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 2px;
+  width: 100%;
+  height: 0.5em;
+  background-color: rgba(255, 26, 117, 0.2); /* Color accent con opacidad */
+  z-index: -1;
+  transform: rotate(-1deg);
+}
