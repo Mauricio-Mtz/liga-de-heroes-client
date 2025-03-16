@@ -4,7 +4,7 @@ import Features from './Features'
 
 const HomePage = () => {
   return (
-    <div className="min-h-screen p-4">
+    <>
       {/* Hero Section */}
       <Hero />
 
@@ -12,7 +12,7 @@ const HomePage = () => {
       <Features />
 
       {/* CTA Section */}
-      <div className="py-16 bg-accent text-accent-content comic-border rounded-lg">
+      <section className="py-16 bg-accent text-accent-content comic-border rounded-lg">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-4xl font-bold mb-6 comic-title">
             ¿Listo para la Aventura?
@@ -25,8 +25,8 @@ const HomePage = () => {
             ¡Comienza Ahora!
           </Link>
         </div>
-      </div>
-    </div>
+      </section>
+    </>
   )
 }
 

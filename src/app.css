@@ -37,9 +37,9 @@
   --color-error-content: #ffffff; /* Blanco */
 
   /* Elementos de estilo cómic más definidos */
-  --radius-selector: 2px; /* Bordes ligeramente redondeados */
-  --radius-field: 2px; /* Bordes ligeramente redondeados */
-  --radius-box: 4px; /* Bordes ligeramente redondeados */
+  --radius-selector: 0px; /* Bordes cuadrados */
+  --radius-field: 0px; /* Bordes cuadrados */
+  --radius-box: 0px; /* Bordes cuadrados */
   --size-selector: 0.3rem;
   --size-field: 0.3rem;
   --border: 2.5px; /* Bordes moderados */
@@ -66,13 +66,19 @@ h1, h2, h3, .card-title, .btn, .comic-text {
 .card {
   box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.9) !important;
   border: 2.5px solid #000 !important;
+  border-radius: 0;
   transition: transform 0.2s ease, box-shadow 0.2s ease !important;
+}
+
+.progress {
+  height: 20px;
 }
 
 /* Botones con borde negro más definido */
 .btn {
   height: 40px;
   border: 2.5px solid #000 !important;
+  border-radius: 0;
   box-shadow: 3px 3px 0px rgba(0, 0, 0, 0.9) !important;
   font-weight: bold !important;
   text-transform: uppercase !important;
@@ -96,6 +102,7 @@ select,
 textarea {
   height: 40px;
   border: 2.5px solid #000 !important;
+  border-radius: 0;
   box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.7) !important;
   transition: transform 0.2s ease, box-shadow 0.2s ease !important;
   font-family: 'Comic Neue', 'Comic Sans MS', sans-serif !important;
@@ -167,18 +174,21 @@ textarea:focus {
 /* Mejoras para detalles de estilo tipo cómic */
 .comic-border {
   border: 2.5px solid #000 !important;
+  border-radius: 0;
   box-shadow: 4px 4px 0 rgba(0,0,0,0.9) !important;
 }
 
 /* Detalles de estilo para las pestañas */
 .tabs-boxed .tab {
   border: 2.5px solid #000 !important;
+  border-radius: 0;
   position: relative;
   box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.7) !important;
 }
 
 .tabs-boxed .tab-active {
   border: 2.5px solid #000 !important;
+  border-radius: 0;
   box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.7) inset !important;
   font-weight: bold !important;
 }

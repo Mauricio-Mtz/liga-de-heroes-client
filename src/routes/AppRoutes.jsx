@@ -3,8 +3,18 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 
 // Importa tus componentes de página
 import HomePage from '../pages/Home/HomePage'
+
 import LoginPage from '../pages/Auth/LoginPage'
 import RegisterPage from '../pages/Auth/RegisterPage'
+
+import ProfilePage from '../pages/Account/ProfilePage'
+import FavoritesPage from '../pages/Account/FavoritesPage'
+
+import CharacterList from '../pages/Catalog/Characters/CharacterList'
+import CharacterDetail from '../pages/Catalog/Characters/CharacterDetail'
+import ItemList from '../pages/Catalog/Items/ItemList'
+import ItemDetail from '../pages/Catalog/Items/ItemList'
+
 import UISamplehPage from '../pages/UISamplePage'
 import NotFoundPage from '../pages/NotFound'
 
@@ -18,8 +28,14 @@ const AppRoutes = () => {
         <Route element={<MainLayout />}>
           {/* Rutas públicas */}
           <Route path="/" element={<HomePage />} />
-          <Route path="/ui-sample" element={<UISamplehPage />} />
-          {/* <Route path="/about" element={<AboutPage />} /> */}
+
+          <Route path="/catalog/character-list" element={<CharacterList />} />
+          <Route path="/catalog/character-detail/:characterId" element={<CharacterDetail />} />
+          <Route path="/catalog/item-list" element={<ItemList />} />
+          <Route path="/catalog/item-detail/:itemId" element={<ItemDetail />} />
+
+          <Route path="/account/profile" element={<ProfilePage />} />
+          <Route path="/account/favorites" element={<FavoritesPage />} />
 
           {/* Rutas protegidas (ejemplo) */}
           {/* <Route path="/dashboard" element={<DashboardPage />} /> */}
@@ -27,6 +43,8 @@ const AppRoutes = () => {
           {/* Página 404 */}
           <Route path="/404" element={<NotFoundPage />} />
 
+          {/* Ruta para muestro de componentes */}
+          <Route path="/ui-sample" element={<UISamplehPage />} />
           {/* Redirección para rutas no encontradas */}
           <Route path="*" element={<Navigate to="/404" replace />} />
         </Route>

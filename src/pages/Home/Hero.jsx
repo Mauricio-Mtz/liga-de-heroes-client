@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 
 const Hero = () => {
   return (
-    <div className="hero min-h-[calc(100vh-100px)] bg-base-200 comic-border">
+    <section className="hero min-h-[calc(100vh-100px)] bg-base-200 comic-border">
       <div className="hero-content flex-col lg:flex-row-reverse p-8">
         <img
           src="/images/hero-illustration.jpg"
@@ -26,7 +26,7 @@ const Hero = () => {
           </div>
         </div>
       </div>
-    </div>
+    </section>
   )
 }
 
