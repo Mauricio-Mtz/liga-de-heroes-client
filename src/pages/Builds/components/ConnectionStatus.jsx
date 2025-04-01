@@ -192,7 +192,7 @@ const ConnectionStatus = ({
                 <li><strong>Estado:</strong> {connInfo.text}</li>
                 <li><strong>Autenticación:</strong> {authInfo.text}</li>
                 <li><strong>Sincronización:</strong> {syncInfo.text}</li>
-                <li><strong>URL del servidor:</strong> {import.meta.env.VITE_API_WS_URL || 'ws://localhost:3000/ws'}</li>
+                <li><strong>URL del servidor:</strong> {import.meta.env.VITE_API_WS_URL}</li>
                 <li>
                   <strong>Token:</strong> {localStorage.getItem('token') ? 
                     '✓ Presente' : 

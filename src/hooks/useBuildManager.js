@@ -3,7 +3,7 @@ import { useState, useEffect, useCallback, useRef } from 'react'
 import useWebSocket from './useWebSocket'
 
 // Configuración de la URL de WebSocket desde las variables de entorno
-const WS_URL = import.meta.env.VITE_API_WS_URL || 'ws://localhost:3000'
+const WS_URL = import.meta.env.VITE_API_WS_URL
 
 // Hook para gestionar builds de personajes
 export function useBuildManager() {

@@ -5,28 +5,18 @@ import BuildsSidebar from './components/BuildsSidebar'
 import CharacterBuildForm from './components/CharacterBuildForm'
 import ItemsList from './components/ItemsList'
 import StatsPanel from './components/StatsPanel'
-import ConnectionStatus from './components/ConnectionStatus'
 import EquippedItemsList from './components/EquippedItemsList'
 import { useAuth } from '../../hooks/useAuth'
-import useWebSocket from '../../hooks/useWebSocket'
-
-// Configuración de la URL de WebSocket desde las variables de entorno
-const WS_URL = import.meta.env.VITE_API_WS_URL || 'ws://localhost:3000/ws'
 
 const BuildsPage = () => {
   const { currentUser } = useAuth()
   const [activeTab, setActiveTab] = useState('character')
   const [selectedCharacterId, setSelectedCharacterId] = useState(null)
   
-  // Conectar directamente con WebSocket para obtener funciones de reconexión y autenticación
-  const { reconnect, authenticate, authStatus } = useWebSocket(WS_URL)
-  
   const {
     currentBuild,
-    connectionStatus,
     syncStatus,
     errorMessage,
-    pendingChanges,
     initializeBuild,
     loadBuild,
     addItem,
