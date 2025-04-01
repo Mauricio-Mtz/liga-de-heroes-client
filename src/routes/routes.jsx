@@ -8,7 +8,6 @@ import ForgotPasswordPage from '../pages/Auth/ForgotPasswordPage';
 import PasswordResetConfirmationPage from '../pages/Auth/PasswordResetConfirmationPage';
 
 import ProfilePage from '../pages/Account/ProfilePage';
-import FavoritesPage from '../pages/Account/FavoritesPage';
 import CharacterList from '../pages/Catalog/Characters/CharacterList';
 import CharacterDetail from '../pages/Catalog/Characters/CharacterDetail';
 import ItemList from '../pages/Catalog/Items/ItemList';
@@ -40,5 +39,4 @@ export const authRoutes = [
 
 export const protectedRoutes = [
   { path: '/account/profile', element: <ProfilePage /> },
-  { path: '/account/favorites', element: <FavoritesPage /> },
 ];

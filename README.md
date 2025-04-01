@@ -111,7 +111,6 @@ El frontend implementa un sistema robusto de comunicación WebSocket:
 ### Rutas Protegidas (requieren autenticación)
 
 - `/account/profile` - Perfil de usuario
-- `/account/favorites` - Campeones y roles favoritos
 
 ## Instalación y Configuración
 

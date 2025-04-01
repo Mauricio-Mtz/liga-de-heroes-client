@@ -21,7 +21,7 @@ const ProfilePage = () => {
       };
 
       // Realizar solicitud al backend
-      const response = await axios.get(`${import.meta.env.VITE_API_WS_URL}/profile/me`, config);
+      const response = await axios.get(`${import.meta.env.VITE_API_URL}/profile/me`, config);
       
       // Transformar datos para coincidir con el formato esperado por los componentes
       const transformedUserData = {
