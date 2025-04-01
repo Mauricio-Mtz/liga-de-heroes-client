@@ -1,6 +1,6 @@
 // src/components/layout/Header.jsx
 import { Link, useNavigate } from 'react-router-dom';
-import { Search, User, Bell, LogOut, Heart, Settings } from 'lucide-react';
+import { User, LogOut, Settings } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
 
 const Header = () => {
@@ -34,13 +34,6 @@ const Header = () => {
 
           {/* Right: Actions */}
           <div className="flex items-center gap-4">
-            <button className="p-2 border-2 border-black bg-base-100 hover:bg-base-200 shadow-md shadow-black">
-              <Search className="w-5 h-5" />
-            </button>
-            <button className="p-2 border-2 border-black bg-base-100 hover:bg-base-200 shadow-md shadow-black">
-              <Bell className="w-5 h-5" />
-            </button>
-            
             {/* Dropdown menu de perfil con Daisy UI - Estilo cómic */}
             <div className="dropdown dropdown-end">
               <button 
