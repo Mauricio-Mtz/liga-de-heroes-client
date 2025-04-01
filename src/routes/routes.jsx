@@ -24,7 +24,6 @@ export const publicRoutes = [
   { path: '/catalog/character-detail/:characterId', element: <CharacterDetail /> },
   { path: '/catalog/item-list', element: <ItemList /> },
   { path: '/catalog/item-detail/:itemId', element: <ItemDetail /> },
-  { path: '/builds', element: <BuildsPage /> },
   { path: '/ui-sample', element: <UISamplePage /> },
   { path: '/404', element: <NotFoundPage /> },  
 ];
@@ -39,4 +38,5 @@ export const authRoutes = [
 
 export const protectedRoutes = [
   { path: '/account/profile', element: <ProfilePage /> },
+  { path: '/builds', element: <BuildsPage /> },
 ];
