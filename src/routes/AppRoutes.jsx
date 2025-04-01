@@ -7,7 +7,6 @@ import { useAuth } from '../hooks/useAuth';
 
 const AppRoutes = () => {
   const { isAuthenticated } = useAuth();
-  console.log(isAuthenticated)
   
   return (
     <BrowserRouter>

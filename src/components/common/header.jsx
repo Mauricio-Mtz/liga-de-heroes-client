@@ -1,6 +1,6 @@
 // src/components/layout/Header.jsx
 import { Link, useNavigate } from 'react-router-dom';
-import { Search, User, Bell, LogOut, Heart, Mail, Settings } from 'lucide-react';
+import { Search, User, Bell, LogOut, Heart, Settings } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
 
 const Header = () => {
@@ -49,7 +49,7 @@ const Header = () => {
               >
                 <User className="w-5 h-5" />
                 {currentUser && (
-                  <span className="ml-2 font-bold hidden sm:inline">{currentUser.name}</span>
+                  <span className="ml-2 font-bold hidden sm:inline">{currentUser.riotProfile.summonerName}</span>
                 )}
               </button>
               
@@ -67,23 +67,11 @@ const Header = () => {
                       </Link>
                     </li>
                     <li>
-                      <Link to="/account/favorites" className="flex items-center gap-2 py-2 hover:bg-base-200 font-bold">
-                        <Heart className="w-4 h-4" />
-                        <span>Favoritos</span>
-                      </Link>
-                    </li>
-                    {/* <li>
-                      <Link to="/account/settings" className="flex items-center gap-2 py-2 hover:bg-base-200 font-bold">
+                      <Link to="/builds" className="flex items-center gap-2 py-2 hover:bg-base-200 font-bold">
                         <Settings className="w-4 h-4" />
-                        <span>Ajustes</span>
+                        <span>Builds</span>
                       </Link>
                     </li>
-                    <li>
-                      <Link to="/account/contact" className="flex items-center gap-2 py-2 hover:bg-base-200 font-bold">
-                        <Mail className="w-4 h-4" />
-                        <span>Contacto</span>
-                      </Link>
-                    </li> */}
                     <li className="border-t-2 border-black mt-2 pt-2">
                       <button 
                         onClick={handleLogout}

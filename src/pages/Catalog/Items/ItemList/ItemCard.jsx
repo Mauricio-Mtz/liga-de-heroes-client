@@ -10,7 +10,6 @@ const ItemCard = ({ item }) => {
     handleCardClick,
     getItemPrice,
     hasValidStats,
-    description
   } = useItemCard(item)
 
   return (

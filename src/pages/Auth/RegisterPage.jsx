@@ -1,14 +1,18 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { useAuth } from '@/hooks/useAuth'
 
 function RegisterPage() {
   const [formData, setFormData] = useState({
-    fullName: '',
     email: '',
     password: '',
     confirmPassword: '',
-    agreeTerms: false,
+    summonerName: '',
+    summonerTag: '',
   })
+
+  const navigate = useNavigate()
+  const { register, error } = useAuth()
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target
@@ -18,10 +22,26 @@ function RegisterPage() {
     })
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    // Aquí iría la lógica de registro
-    console.log('Register attempt:', formData)
+
+    try {
+      const { email, password, confirmPassword, summonerName, summonerTag } = formData
+  
+      const response = await register(email, password, confirmPassword, summonerName, summonerTag)
+      console.log(error)
+      if (response) {
+        // Guardar email para posible reenvío
+        localStorage.setItem('registeredEmail', email)
+        
+        // Mensaje de verificación pendiente
+        alert('Por favor, verifica tu correo electrónico')
+        
+        navigate('/login')
+      }
+    } catch (err) {
+      console.error('Error en el registro:', err)
+    }
   }
 
   return (
@@ -36,36 +56,65 @@ function RegisterPage() {
           </div>
 
           <form onSubmit={handleSubmit}>
-            <div className="flex flex-col">
-              <label className="label">
-                <span className="label-text">Nombre Completo</span>
-              </label>
-              <input
-                type="text"
-                name="fullName"
-                placeholder="Escribe tu nombre completo"
-                className="input input-bordered w-full"
-                value={formData.fullName}
-                onChange={handleChange}
-                required
-              />
+            {/* Error messages */}
+            {error && (
+              <div className="alert alert-error mb-4">
+                <span>{error}</span>
+              </div>
+            )}
+
+            {/* Summoner Name and Tag */}
+            <div className='flex gap-4'>
+              <div className="flex flex-col w-2/3">
+                <label className="label">
+                  <span className="label-text">Nombre de Invocador</span>
+                </label>
+                <input
+                  type="text"
+                  name="summonerName"
+                  placeholder="Nombre de tu cuenta de League of Legends"
+                  className="input input-bordered w-full"
+                  value={formData.summonerName}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+
+              <div className="flex flex-col w-1/3">
+                <label className="label">
+                  <span className="label-text">Etiqueta</span>
+                </label>
+                <input
+                  type="text"
+                  name="summonerTag"
+                  placeholder="#EUW"
+                  className="input input-bordered w-full"
+                  value={formData.summonerTag}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
             </div>
 
+            {/* Email Input with Validation */}
             <div className="flex flex-col">
               <label className="label">
                 <span className="label-text">Email</span>
               </label>
-              <input
-                type="email"
-                name="email"
-                placeholder="tu@email.com"
-                className="input input-bordered w-full"
-                value={formData.email}
-                onChange={handleChange}
-                required
-              />
+              <div className="flex items-center space-x-2">
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="tu@email.com"
+                  className="input input-bordered w-full"
+                  value={formData.email}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
             </div>
 
+            {/* Password Inputs */}
             <div className="flex flex-col">
               <label className="label">
                 <span className="label-text">Contraseña</span>
@@ -78,6 +127,7 @@ function RegisterPage() {
                 value={formData.password}
                 onChange={handleChange}
                 required
+                minLength={8}
               />
             </div>
 
@@ -93,89 +143,25 @@ function RegisterPage() {
                 value={formData.confirmPassword}
                 onChange={handleChange}
                 required
+                minLength={8}
               />
             </div>
 
-            <div className="flex flex-col">
-              <label className="label cursor-pointer justify-start gap-2">
-                <input
-                  type="checkbox"
-                  name="agreeTerms"
-                  className="checkbox"
-                  checked={formData.agreeTerms}
-                  onChange={handleChange}
-                  required
-                />
-                <span className="label-text text-wrap text-justify">
-                  Acepto los{' '}
-                  <Link to="/terms" className="link link-primary">
-                    Términos y Condiciones
-                  </Link>{' '}
-                  y la{' '}
-                  <Link to="/privacy" className="link link-primary">
-                    Política de Privacidad
-                  </Link>
-                </span>
-              </label>
-            </div>
-
-            <div className="flex flex-col">
-              <button className="btn btn-primary">¡Crear mi cuenta!</button>
+            {/* Submit Button */}
+            <div className="flex flex-col mt-4">
+              <button 
+                type="submit" 
+                className="btn btn-primary"
+              >
+                ¡Crear mi cuenta!
+              </button>
             </div>
           </form>
 
           <section>
-            <div className="divider">O regístrate con</div>
+            <div className="divider"></div>
 
-            <div className="grid grid-cols-3 gap-3">
-              <button className="btn btn-outline">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
-                </svg>
-              </button>
-              <button className="btn btn-outline">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
-                </svg>
-              </button>
-              <button className="btn btn-outline">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
-                </svg>
-              </button>
-            </div>
-
-            <div className="text-center" style={{ '--rotation': '0deg' }}>
+            <div className="text-center">
               <p>
                 ¿Ya tienes una cuenta?{' '}
                 <Link to="/login" className="link link-primary font-bold">

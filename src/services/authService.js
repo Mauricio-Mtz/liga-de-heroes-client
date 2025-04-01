@@ -1,72 +1,182 @@
-// services/authService.js
-// Datos de prueba para desarrollo
-const MOCK_USER = {
-    id: '1',
-    name: 'Mauricio',
-    email: 'maurimtz07@gmail.com',
-    role: 'user'
-  };
-  
-  const MOCK_TOKEN = 'mock-jwt-token-xyz123456789';
-  
-  // Credenciales permitidas
-  const VALID_CREDENTIALS = {
-    email: 'maurimtz07@gmail.com',
-    password: 'Mau1224!"'
-  };
-  
-  // Simula una pequeña demora para imitar una llamada a API
-  const apiDelay = () => new Promise(resolve => setTimeout(resolve, 500));
-  
-  export const authService = {
-    // Función para iniciar sesión
-    login: async (email, password) => {
-      await apiDelay();
-      
-      // Verificar credenciales hardcodeadas
-      if (email === VALID_CREDENTIALS.email && password === VALID_CREDENTIALS.password) {
-        // Guardar token en localStorage
-        localStorage.setItem('authToken', MOCK_TOKEN);
-        console.log("SESION INICIADA");
-        return MOCK_USER;
-      } else {
-        throw new Error('Credenciales incorrectas');
+import axios from 'axios'
+
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000'
+
+class AuthService {
+  // Login method
+  async login(email, password) {
+    try {
+      const response = await axios.post(`${API_URL}/auth/login`, {
+        email,
+        password,
+      })
+
+      return response.data
+    } catch (error) {
+      if (error.response) {
+        throw new Error(
+          error.response.data.message || 'Inicio de sesión fallido'
+        )
       }
-    },
-  
-    // Función para registrarse (simulada)
-    register: async (email, password, name) => {
-      await apiDelay();
-      
-      // En modo desarrollo, simplemente simulamos un registro exitoso
-      console.log("REGISTRO COMPLETADO");
-      return { 
-        success: true, 
-        message: 'Registro exitoso. Por favor inicia sesión.' 
-      };
-    },
-  
-    // Función para cerrar sesión
-    logout: () => {
-      console.log("SESION TERMINADA");
-      localStorage.removeItem('authToken');
-    },
-  
-    // Verificar si hay un token válido
-    verifyToken: async () => {
-      const token = localStorage.getItem('authToken');
-      
-      if (!token) {
-        return null;
-      }
-      
-      // En modo desarrollo, verificamos si el token coincide con nuestro token de prueba
-      if (token === MOCK_TOKEN) {
-        return MOCK_USER;
-      }
-      
-      // Token inválido
-      localStorage.removeItem('authToken');
-      return null;
+      throw new Error('Error de conexion. Porfavor, intenta de nuevo.')
     }
-  };
+  }
+
+  // Register method
+  async register(email, password, summonerName, summonerTag) {
+    try {
+      const response = await axios.post(`${API_URL}/auth/register`, {
+        email,
+        password,
+        summonerName,
+        summonerTag,
+      })
+
+      return response.data
+    } catch (error) {
+      if (error.response) {
+        throw new Error(error.response.data.message || 'Registro fallido')
+      }
+      throw new Error('Error de conexion. Porfavor, intenta de nuevo.')
+    }
+  }
+
+  // Verify token method
+  async verifyToken(token) {
+    if (!token) {
+      return null
+    }
+
+    try {
+      const response = await axios.get(`${API_URL}/auth/verify-token`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+
+      return response.data.user
+    } catch (error) {
+      // Handle token verification errors
+      if (error.response && error.response.status === 401) {
+        // Token is invalid or expired
+        return null
+      }
+      throw error
+    }
+  }
+
+  // Añadir estos métodos a la clase AuthService
+  async verifyEmail(token) {
+    try {
+      const response = await axios.get(`${API_URL}/auth/verify-email`, {
+        params: { token },
+      })
+      return response.data
+    } catch (error) {
+      if (error.response) {
+        throw new Error(
+          error.response.data.message ||
+            'Error al verificar el correo electrónico'
+        )
+      }
+      throw new Error('Error de conexión. Por favor, intenta de nuevo.')
+    }
+  }
+
+  async resendVerificationEmail(email) {
+    try {
+      const response = await axios.post(`${API_URL}/auth/resend-verification`, {
+        email,
+      })
+      return response.data
+    } catch (error) {
+      if (error.response) {
+        throw new Error(
+          error.response.data.message ||
+            'No se pudo reenviar el correo de verificación'
+        )
+      }
+      throw new Error('Error de conexión. Por favor, intenta de nuevo.')
+    }
+  }
+  
+  // Request Password Reset
+  async requestPasswordReset(email) {
+    try {
+      // Cambiado para coincidir con la ruta del backend
+      const response = await axios.post(
+        `${API_URL}/auth/forgot-password`, // Cambiar a forgot-password
+        { email }
+      )
+      return response.data
+    } catch (error) {
+      if (error.response) {
+        throw new Error(
+          error.response.data.message ||
+            'No se pudo solicitar el restablecimiento de contraseña'
+        )
+      }
+      throw new Error('Error de conexion. Porfavor, intenta de nuevo.')
+    }
+  }
+
+  // Validate Reset Token
+  async validateResetToken(token) {
+    try {
+      // Cambiado para coincidir con la ruta del backend
+      const response = await axios.get(`${API_URL}/auth/verify-reset-token`, { // Cambiar a verify-reset-token
+        params: { token },
+      })
+      return response.data
+    } catch (error) {
+      if (error.response) {
+        throw new Error(
+          error.response.data.message || 'Token de restablecimiento inválido'
+        )
+      }
+      throw new Error('Error de conexion. Porfavor, intenta de nuevo.')
+    }
+  }
+
+  // Confirm Password Reset
+  async confirmPasswordReset(token, password) {
+    try {
+      // Cambiado para coincidir con la ruta del backend
+      const response = await axios.post(
+        `${API_URL}/auth/reset-password`, // Cambiar a reset-password
+        {
+          token,
+          newPassword: password, // Cambiar a newPassword para que coincida con el backend
+        }
+      )
+      return response.data
+    } catch (error) {
+      if (error.response) {
+        throw new Error(
+          error.response.data.message || 'No se pudo restablecer la contraseña'
+        )
+      }
+      throw new Error('Error de conexion. Porfavor, intenta de nuevo.')
+    }
+  }
+
+  // Check Email Availability
+  async checkEmailAvailability(email) {
+    try {
+      const response = await axios.get(`${API_URL}/auth/check-email`, {
+        params: { email },
+      })
+      return response.data
+    } catch (error) {
+      if (error.response) {
+        throw new Error(
+          error.response.data.message ||
+            'No se pudo verificar la disponibilidad del correo'
+        )
+      }
+      throw new Error('Error de conexion. Porfavor, intenta de nuevo.')
+    }
+  }
+}
+
+export const authService = new AuthService()

@@ -1,5 +1,4 @@
-// components/ChampionsSection.jsx
-import ChampionCard from './ChampionCard'
+import ChampionCard from './ChampionCard';
 
 const ChampionsSection = ({ champions }) => {
   return (
@@ -12,18 +11,12 @@ const ChampionsSection = ({ champions }) => {
       </div>
 
       <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
-        {champions.map((champion, idx) => (
-          <ChampionCard key={idx} champion={champion} index={idx} />
+        {champions.map((championId, idx) => (
+          <ChampionCard key={championId} championId={championId} index={idx} />
         ))}
       </div>
-
-      <div className="mt-6 text-center">
-        <button className="btn btn-primary comic-border">
-          VER TODOS MIS CAMPEONES
-        </button>
-      </div>
     </div>
-  )
-}
+  );
+};
 
-export default ChampionsSection
+export default ChampionsSection;

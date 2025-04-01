@@ -12,5 +12,24 @@ export default defineConfig({
     alias: {
       '@': path.resolve(__dirname, './src')
     }
+  },
+  server: {
+    port: 10000,
+    host: '0.0.0.0',
+    historyApiFallback: true
+  },
+  preview: {
+    allowedHosts: [
+      'liga-de-heroes-client.onrender.com',
+    ],
+    port: 10000,
+    host: '0.0.0.0',
+    historyApiFallback: true
+  },
+  build: {
+    outDir: 'dist',
+    assetsDir: 'assets',
+    emptyOutDir: true,
+    sourcemap: false
   }
 })
